@@ -11,6 +11,7 @@ package:
       - effect
       - assert
       - console
+      - refs
 
 workspace:
   packageSet:
@@ -26,3 +27,5 @@ workspace:
       path: "../gopurs-console"
     foldable-traversable:
       path: "../gopurs-foldable-traversable"
+    refs:
+      path: "../gopurs-refs"

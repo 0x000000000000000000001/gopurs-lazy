@@ -27,18 +27,11 @@ import Data.TraversableWithIndex (class TraversableWithIndex)
 -- | type class instances.
 -- |
 -- | `Lazy` values can be evaluated by using the `force` function.
-newtype Lazy a = Lazy (Unit -> a)
+foreign import data Lazy :: Type -> Type
 
-type role Lazy representational
+foreign import defer :: forall a. (Unit -> a) -> Lazy a
 
--- | Defer a computation, creating a `Lazy` value.
-defer :: forall a. (Unit -> a) -> Lazy a
-defer f = Lazy f
-
--- | Extract the result of a `Lazy` value by either forcing evaluation or
--- | by retrieving the saved result of a previously forced evaluation.
-force :: forall a. Lazy a -> a
-force (Lazy f) = f unit
+foreign import force :: forall a. Lazy a -> a
 
 instance semiringLazy :: Semiring a => Semiring (Lazy a) where
   add a b = defer \_ -> force a + force b
